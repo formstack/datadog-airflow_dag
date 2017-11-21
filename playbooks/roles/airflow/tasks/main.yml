@@ -1,0 +1,8 @@
+---
+- name: Install Airflow
+  pip:
+    name: airflow
+    state: present
+  tags:
+   - pip
+   - airflow
