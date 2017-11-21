@@ -1,0 +1,31 @@
+---
+- name: Enable EPEL
+  yum:
+    name: epel-release
+    state: present
+  tags:
+    - yum
+    - epel
+    - core-dependencies
+
+- name: Install yum-hosted dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python-devel
+    - python-pip
+    - gcc
+  tags:
+    - yum
+    - pip
+    - core-dependencies
+
+# :yodawg:
+- name: Update pip
+  pip:
+    name: pip
+    state: latest
+  tags:
+    - pip
+    - core-dependencies
