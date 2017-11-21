@@ -8,5 +8,6 @@ Vagrant.configure(2) do |config|
         ansible.playbook = "./playbooks/vagrant.yml"
         ansible.become = true
         ansible.become_user = 'root'
+        ansible.compatibility_mode = "2.0"
     end
 end
