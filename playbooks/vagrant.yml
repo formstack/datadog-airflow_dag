@@ -1,0 +1,6 @@
+---
+# Vagrant Development Environment
+- hosts: all
+  roles:
+    - airflow
+    - datadog
