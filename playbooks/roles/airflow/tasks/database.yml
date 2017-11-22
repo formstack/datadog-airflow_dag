@@ -1,0 +1,7 @@
+---
+- name: Initialize Airflow database
+  shell: |
+    export AIRFLOW_HOME={{ airflow.dir }}
+    /bin/airflow initdb
+  tags:
+    - airflow
