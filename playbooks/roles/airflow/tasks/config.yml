@@ -1,0 +1,36 @@
+---
+- name: Create Airflow Directory
+  file:
+    path: "{{ airflow.dir }}"
+    owner: airflow
+    group: airflow
+    mode: 0755
+    state: directory
+  tags:
+    - airflow
+
+- name: Airflow sysconfig
+  template:
+    src: sysconfig.j2
+    dest: /etc/sysconfig/airflow
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - airflow
+
+- name: Airflow config
+  template:
+    src: config.j2
+    dest: "/{{ airflow.dir }}/airflow.cfg"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure environment variable is set for Vagrant user
+  template:
+    src: bashrc.j2
+    dest: /home/vagrant/.bashrc
+    owner: vagrant
+    group: vagrant
+    mode: 0644

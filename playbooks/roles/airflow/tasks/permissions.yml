@@ -1,0 +1,16 @@
+---
+- name: Create airflow group
+  group:
+    name: airflow
+    state: present
+  tags:
+    - airflow
+
+- name: Create airflow user
+  user:
+    name: airflow
+    group: airflow
+    system: yes
+    state: present
+  tags:
+    - airflow

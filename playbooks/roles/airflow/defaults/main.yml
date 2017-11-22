@@ -1,0 +1,3 @@
+---
+airflow:
+  dir: /var/lib/airflow

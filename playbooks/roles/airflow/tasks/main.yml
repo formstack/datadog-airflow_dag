@@ -1,8 +1,5 @@
 ---
-- name: Install Airflow
-  pip:
-    name: airflow
-    state: present
-  tags:
-   - pip
-   - airflow
+- include: install.yml
+- include: permissions.yml
+- include: config.yml
+- include: database.yml
