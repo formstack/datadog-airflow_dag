@@ -1,0 +1,19 @@
+---
+mysql:
+  username: root
+  password: root
+  location: localhost
+
+db_config:
+  buffer_pool_size: 64M
+  directory: /var/lib/mysql
+  innodb_flush_method: O_DIRECT
+  log_buffer_size: 16M
+  log_file_size: 256M
+  old_blocks_time: 500
+  random_read_ahead: 1
+  read_rnd_buffer_size: 32M
+  read_io_threads: 16
+  sort_buffer_size: 32M
+  sql_mode: 'NO_ENGINE_SUBSTITUTION'
+  write_io_threads: 16

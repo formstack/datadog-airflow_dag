@@ -1,0 +1,97 @@
+---
+# DO NOT USE THIS FILE IN PRODUCTION. IT SETS DATABASE USERS AND PASSWORDS DEFINED IN PLAINTEXT
+- name: check ownership of mysql files
+  file:
+    state: directory
+    path: /var/lib/mysql
+    owner: mysql
+    group: mysql
+    recurse: yes
+  tags:
+    - mysql
+    - setup
+
+- name: check permissions on mysql directory
+  file: path=/var/lib/mysql owner=mysql group=mysql mode=0755
+  tags:
+    - mysql
+    - setup
+
+- name: Remove lost+found directory
+  file:
+    path: '/var/lib/mysql/lost+found'
+    state: absent
+  tags:
+    - mysql
+    - setup
+
+- name: my.cfg
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart mysqld
+  tags:
+    - mysql
+    - setup
+
+- name: initialize database
+  command: mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql
+  args:
+    creates: /var/lib/mysql/mysql
+  register: init_mysql
+  tags:
+    - mysql
+    - setup
+
+- name: enable and start mysql
+  service:
+    name: mysqld
+    enabled: yes
+    state: started
+  tags:
+    - mysql
+    - setup
+
+# Set the root password
+- name: 'root mysql user'
+  mysql_user:
+    login_host: "{{ mysql.location }}"
+    login_user: "{{ mysql.username }}"
+    name: "{{ mysql.username }}"
+    password: "{{ mysql.password }}"
+    host: "{{ mysql.location }}"
+    priv: "*.*:ALL,GRANT"
+  when: init_mysql.changed
+  tags:
+    - mysql
+    - setup
+
+- name: Create airflow database
+  mysql_db:
+    login_host: "{{ mysql.location }}"
+    login_user: "{{ mysql.username }}"
+    login_password: "{{ mysql.password }}"
+    name: airflow
+    state: present
+  tags:
+    - airflow
+    - mysql
+
+- name: Create airflow mysql user
+  mysql_user:
+    # TODO: change this to the site config variable once DEVOPS-314 is complete
+    login_host: "{{ mysql.location }}"
+    login_user: "{{ mysql.username }}"
+    login_password: "{{ mysql.password }}"
+    name: airflow
+    password: airflowroot
+    host: "{{ mysql.location }}"
+    # Airflow docs do not explain what privs are required.
+    priv: "airflow.*:ALL"
+  tags:
+    - airflow
+    - mysql

@@ -1,0 +1,28 @@
+---
+- name: Install MySQL Community Release Repo
+  yum:
+    name: "https://dev.mysql.com/get/mysql57-community-release-el{{ ansible_distribution_major_version }}-9.noarch.rpm"
+    state: installed
+  tags:
+    - mysql
+
+- name: Install yum deps for MySQL
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mysql
+    - mysql-community-devel
+    - mysql-community-server
+  tags:
+    - yum
+    - mysql
+
+- name: Install pip deps for MySQL
+  pip:
+    name: MySQL-python
+    state: present
+  tags:
+    - pip
+    - mysql
+
