@@ -11,7 +11,8 @@ checks.d/airflow_dag.py must be copied to the agent's checks.d directory.  On a 
 
 ### Requirements
 * [Vagrant](https://www.vagrantup.com/)
-* **TODO:** List additional requirements (possibly Ansible)
+* Ansible
+    * See installation instructions in the Server Playbooks repo
 
 ### Setup
 * **TODO:** List setup steps here
