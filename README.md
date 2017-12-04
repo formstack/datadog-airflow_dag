@@ -14,5 +14,8 @@ checks.d/airflow_dag.py must be copied to the agent's checks.d directory.  On a 
 * Ansible
     * See installation instructions in the Server Playbooks repo
 
+## Testing
 ### Setup
-* **TODO:** List setup steps here
+1. `vagrant ssh`
+2. `airflow initdb`
+3. `airlflow unpause tutorial`
