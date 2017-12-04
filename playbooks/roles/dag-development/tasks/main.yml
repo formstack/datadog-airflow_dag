@@ -1,0 +1,26 @@
+---
+- name: Check for dags directory
+  stat:
+    path: /vagrant/dags
+  register: dag_dir
+  tags:
+    - setup
+    - dag-development
+
+- name: Symlink dag directory
+  file:
+    state: link
+    path: /var/lib/airflow/dags
+    src: /vagrant/dags
+  when: dag_dir.stat.isdir is defined and dag_dir.stat.isdir
+  tags:
+    - setup
+    - dag-development
+
+- name: Add vagrant user to airflow group
+  user:
+    name: vagrant
+    groups: airflow
+    append: yes
+  tags:
+    - dag-development
