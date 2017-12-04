@@ -18,4 +18,9 @@ checks.d/airflow_dag.py must be copied to the agent's checks.d directory.  On a 
 ### Setup
 1. `vagrant ssh`
 2. `airflow initdb`
-3. `airlflow unpause tutorial`
+3. `airflow unpause tutorial`
+
+### Create Airflow Data
+The Airflow Dag has been set up to be able to run via the Scheduler. To use it, run `airflow scheduler` from within the
+Vagrant environment. This script expects to be run in a daemon-like setup, so you may wish to create another SSH session
+to your Vagrant environment to run it.
