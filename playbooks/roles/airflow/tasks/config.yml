@@ -4,7 +4,17 @@
     path: "{{ airflow.dir }}"
     owner: airflow
     group: airflow
-    mode: 0755
+    mode: 0775
+    state: directory
+  tags:
+    - airflow
+
+- name: Create Log Directory
+  file:
+    path: "{{ airflow.dir }}/logs"
+    owner: airflow
+    group: airflow
+    mode: 0775
     state: directory
   tags:
     - airflow
