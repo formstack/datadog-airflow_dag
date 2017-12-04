@@ -12,7 +12,12 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-tutorial_dag = DAG('tutorial', default_args=default_args)
+tutorial_dag = DAG(
+    dag_id='tutorial',
+    default_args=default_args,
+    schedule_interval='0 0 * * *',
+    dagrun_timeout=timedelta(hours=1)
+)
 
 task_one = BashOperator(task_id='print_date', bash_command='date', dag=tutorial_dag)
 task_two = BashOperator(task_id='sleep', bash_command='sleep 5', retries=3, dag=tutorial_dag)
@@ -33,4 +38,4 @@ task_three = BashOperator(
 )
 
 task_two.set_upstream(task_one)
-task_three.set_upstream(task_two)
+task_three.set_upstream(task_one)
