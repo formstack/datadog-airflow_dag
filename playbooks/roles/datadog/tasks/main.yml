@@ -17,3 +17,26 @@
   tags:
     - datadog
     - yum
+
+- name: Install datadog dependencies
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ntplib
+    - simplejson
+  tags:
+    - datadog
+    - pip
+
+- name: Create Datadog Config File
+  copy:
+    src: /etc/dd-agent/datadog.conf.example
+    dest: /etc/dd-agent/datadog.conf
+    remote_src: yes
+
+- name: Set API Key in config
+  replace:
+    dest: /etc/dd-agent/datadog.conf
+    regexp: 'api_key:\.*'
+    replace: 'api_key: {{ datadog_api_key }}'
