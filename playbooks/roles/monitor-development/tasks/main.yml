@@ -1,0 +1,13 @@
+- name: Install dependent libraries
+  pip:
+    name: pymysql
+    state: present
+  tags:
+    - dag-development
+    - pip
+
+- name: Symlink check
+  file:
+    state: link
+    path: /etc/dd-agent/checks.d/airflow_dag.py
+    src: /vagrant/checks.d/airflow_dag.py
