@@ -110,4 +110,4 @@ ENV/
 *.retry
 
 # API Keys
-playbooks/roles/datadog/vars.yml
+playbooks/roles/datadog/vars/main.yml
