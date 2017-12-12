@@ -108,3 +108,6 @@ ENV/
 
 # Provisioning Stuff
 *.retry
+
+# API Keys
+playbooks/roles/datadog/vars.yml
