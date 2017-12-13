@@ -32,10 +32,14 @@ class AirflowDagCheck(AgentCheck):
     def __init__(self, name, init_config, agentConfig, instances=None):
         AgentCheck.__init__(self, name, init_config, agentConfig, instances)
 
+        self.table = None
+
     def check(self, instance):
         collected_metrics = None
 
         host, user, password, database, table, port = self._get_config(instance)
+
+        self.table = table
 
         if (not host or not user):
             raise Exception("mysql_host and mysql_user are required")
