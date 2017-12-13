@@ -11,3 +11,14 @@
     state: link
     path: /etc/dd-agent/checks.d/airflow_dag.py
     src: /vagrant/checks.d/airflow_dag.py
+
+- name: Symlink config
+  file:
+    state: link
+    path: /etc/dd-agent/conf.d/airflow_dag.yaml
+    src: /vagrant/conf.d/airflow_dag.yaml
+
+- name: Restart Datadog Agent
+  service:
+    name: datadog-agent
+    state: restarted
