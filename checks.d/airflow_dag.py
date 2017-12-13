@@ -24,7 +24,6 @@ SOFTWARE.
 import pymysql
 
 from checks import AgentCheck
-from collections import defaultdict
 from contextlib import closing, contextmanager
 
 
