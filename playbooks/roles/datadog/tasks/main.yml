@@ -34,9 +34,22 @@
     src: /etc/dd-agent/datadog.conf.example
     dest: /etc/dd-agent/datadog.conf
     remote_src: yes
+  tags:
+    - datadog
 
 - name: Set API Key in config
   replace:
     dest: /etc/dd-agent/datadog.conf
     regexp: 'api_key:\.*'
     replace: 'api_key: {{ datadog_api_key }}'
+  tags:
+    - datadog
+
+- name: Start Datadog Service
+  service:
+    name: datadog-agent
+    state: started
+    enabled: yes
+  tags:
+    - datadog
+    - service
