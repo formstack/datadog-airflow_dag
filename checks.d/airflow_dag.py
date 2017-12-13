@@ -43,7 +43,7 @@ class AirflowDagCheck(AgentCheck):
 
         self.table = table
 
-        if (not host or not user):
+        if not host or not user:
             raise Exception("mysql_host and mysql_user are required")
 
         with self._connect(host, user, password, port, database) as db:
