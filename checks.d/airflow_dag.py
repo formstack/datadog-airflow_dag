@@ -52,6 +52,19 @@ class AirflowDagCheck(AgentCheck):
             except Exception:
                 self.log_exception(Exception.message)
 
+        if collected_metrics == None:
+            self.service_check(self.SERVICE_CHECK_NAME, AgentCheck.CRITICAL)
+
+        for metric in collected_metrics:
+            dag_check_tags = [
+                'dag_id:%s' % metric['dag_id'],
+            ]
+
+            if metric['state'] == 'failed':
+                self.service_check(self.DAG_CHECK_NAME, AgentCheck.CRITICAL, tags=dag_check_tags)
+            elif metric['state'] == 'success':
+                self.service_check(self.DAG_CHECK_NAME, AgentCheck.OK, tags=dag_check_tags)
+
     def _get_config(self, instance):
         host = instance.get('mysql_host', '')
         user = instance.get('mysql_user', '')
