@@ -110,9 +110,11 @@ class AirflowDagCheck(AgentCheck):
 
     def _collect_dag_metrics(self, db):
         with closing(db.cursor(pymysql.cursors.DictCursor)) as cursor:
-            cursor.execute("SELECT dag_id, state, execution_date "
-                           "FROM " + self.table + " "
-                           "WHERE execution_date >= DATE(subdate(NOW(), 1))")
+            cursor.execute(
+                "SELECT dag_id, state, execution_date FROM "
+                + self.table
+                + " WHERE execution_date >= DATE(subdate(NOW(), 1))"
+            )
             results = cursor.fetchall()
 
         return results
