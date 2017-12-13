@@ -29,6 +29,7 @@ from contextlib import closing, contextmanager
 
 class AirflowDagCheck(AgentCheck):
     SERVICE_CHECK_NAME = 'airflow_dag.can_connect'
+    DAG_CHECK_NAME = 'airflow_dag.run_status'
 
     def __init__(self, name, init_config, agentConfig, instances=None):
         AgentCheck.__init__(self, name, init_config, agentConfig, instances)
