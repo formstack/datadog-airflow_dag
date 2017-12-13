@@ -109,5 +109,6 @@ ENV/
 # Provisioning Stuff
 *.retry
 
-# API Keys
+# Sensitive Values
 playbooks/roles/datadog/vars/main.yml
+conf.d/airflow_dag.yaml
